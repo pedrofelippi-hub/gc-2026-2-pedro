@@ -55,16 +55,32 @@ function renderizar() {
   lista.innerHTML = "";
 
   if (consultas.length === 0) {
-    lista.innerHTML = '<tr><td colspan="4" class="vazio">Nenhuma consulta agendada.</td></tr>';
+    lista.innerHTML = '<tr><td colspan="5" class="vazio">Nenhuma consulta agendada.</td></tr>';
     return;
   }
 
-  for (const c of consultas) {
+  consultas.forEach((c, indice) => {
     const linha = document.createElement("tr");
-    linha.innerHTML = `<td>${c.data}</td><td>${c.hora}</td><td>${c.profissional}</td><td>${c.paciente}</td>`;
+
+    linha.innerHTML = `
+      <td>${c.data}</td>
+      <td>${c.hora}</td>
+      <td>${c.profissional}</td>
+      <td>${c.paciente}</td>
+      <td><button type="button" class="cancelar">Cancelar</button></td>
+    `;
+
+    linha.querySelector(".cancelar").addEventListener("click", () => {
+      consultas.splice(indice, 1);
+      salvar(consultas);
+      mensagem.textContent = "Consulta cancelada.";
+      renderizar();
+    });
+
     lista.appendChild(linha);
-  }
+  });
 }
+
 
 formulario.addEventListener("submit", (evento) => {
   evento.preventDefault();
