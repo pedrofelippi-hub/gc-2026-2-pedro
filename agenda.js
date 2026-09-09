@@ -11,7 +11,7 @@ const aviso = document.getElementById("aviso");
 // O localStorage nem sempre esta disponivel: abrindo o arquivo direto do disco
 // (file://), em aba anonima, ou com o navegador bloqueando dados de site, o
 // acesso lanca excecao. Quando isso acontece a agenda continua funcionando na
-// memoria; so nao guarda ao fechar a pagina.
+// memoria; so nao guarda ao fechar a pagina. 
 let memoria = [];
 let temArmazenamento = true;
 
@@ -79,10 +79,9 @@ formulario.addEventListener("submit", (evento) => {
   const consultas = carregar();
 
   if (horarioOcupado(consultas, nova)) {
-    mensagem.textContent = "erro";
-    formulario.reset();
-    return;
-  }
+  mensagem.textContent = `Horário ${nova.hora} já está ocupado para esta profissional.`;
+  return;
+}
 
   consultas.push(nova);
   salvar(consultas);
